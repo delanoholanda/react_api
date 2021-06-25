@@ -5,38 +5,20 @@ import getAtletas from "./service/atletas_service"
 const App = () => {
   
   const [pagina, setPagina] = useState(1)
-  const [tamanho, setTamanho] = useState(10)
+  const [tamanho, setTamanho] = useState(15)
   const [count, setCount] = useState(0);
 
-  const paginar =  (comando) => {
     
-    // const a = await getAtletas(pagina + comando,tamanho)
-    // setPagina(2)
-    // console.log(a)
-    // setAtletas(await getAtletas(pagina + comando,tamanho))
-  } 
-  
   const [ atletas, setAtletas ] = useState( [] )
 
   useEffect( async () => {
     setAtletas(await getAtletas(pagina,tamanho))
-  })
+  }, [pagina])
   
-  return (
+  return (   
 
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    
-
-    <div className="container"> 
-          <button onClick={() => paginar(-1)} > Anterior </button> 
-          <button onClick={() => setPagina(pagina + 1)}> Proximo </button>
-          {/* <button onClick={() => setCount(count + 1)}> </button>        */}
-          
-          {/* <table className="table table-striped">
+    <div className="container">          
+          <table className="table table-striped">
               <thead className="thead-dark">
                 <tr>
                   <th scope="col">Atleta</th>
@@ -67,9 +49,10 @@ const App = () => {
                         </tr>
                   ))}
                   </tbody>
-          </table> */}
-      </div>
-      </div>
+          </table>
+          <button onClick={() => setPagina(Math.max((pagina - 1), 1)) } > Anterior </button>
+          <button onClick={() => setPagina(pagina + 1)}> Proximo </button>
+    </div>
   )
 }
 
